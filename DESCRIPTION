@@ -7,8 +7,11 @@ Description: Helper functions used to render plots in my projects.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: circlize,
+Imports: broom,
+  circlize,
   ComplexHeatmap,
   dplyr,
-  ggplot2
+  fs,
+  ggplot2,
+  survival
 RoxygenNote: 7.2.3

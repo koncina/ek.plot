@@ -35,33 +35,51 @@ set_panel_size <- function(p = NULL, g = ggplotGrob(p),
 }
 
 
-#' Save a ggplot as a standalone file using ggsave
+#' Save a ggplot or ComplexHeatmap as a standalone file
+#' and return path to the file.
+#' I tries to guess the size of the plot if possible
+#' (downstream of set_panel_size() or after defining a heatmap size)
 #'
 #' @importFrom ggplot2 ggsave ggplotGrob
 #' @importFrom fs dir_create
 #' @importFrom grid convertWidth convertHeight unitType
 #'
-#' @param x a ggplot
+#' @param x a ggplot or ComplexHeatmap
 #' @param filename The basename of the output file
+#' @param width,height,units,res The settings for the output file
 #'
 #' @export
-write_plot <- function(x, filename, device = grDevices::png, width = NA, height = NA, units = "cm", ...) {
+write_plot <- function (x, filename, device = grDevices::png,
+                        width = NA, height = NA, units = "cm", ...) {
+  UseMethod("write_plot", x)
+}
 
-  f <- get_report_path(filename)
 
-  if ("ggplot" %in% class(x))
-    x <- ggplotGrob(x)
+#' @export
+write_plot.gtable <- function(x, filename, device = grDevices::png,
+                              width = NA, height = NA, units = "cm", ...) {
 
   if (isTRUE(is.na(width)) && !"null" %in% unitType(x$widths))
-    width <- grid::convertWidth(sum(x$widths),
-                                unitTo = units, valueOnly = TRUE)
+    width <- convertWidth(sum(x$widths),
+                          unitTo = units, valueOnly = TRUE)
 
   if (isTRUE(is.na(height)) && !"null" %in% unitType(x$heights))
-    height <- grid::convertHeight(sum(x$heights),
-                                  unitTo = units, valueOnly = TRUE)
+    height <- convertHeight(sum(x$heights),
+                            unitTo = units, valueOnly = TRUE)
 
-  ggsave(f, plot = x, device = device, width = width, height = height, units = units, ...)
-  f
+  ggsave(filename, plot = x, device = device, width = width, height = height, units = units, ...)
+  filename
+}
+
+#' @export
+write_plot.ggplot <- function(x, filename, device = grDevices::png,
+                              width = NA, height = NA, units = "cm", ...) {
+
+
+  x <- ggplotGrob(x)
+  write_plot(x, filename, device,
+             width, height, units, ...)
+
 }
 
 get_heatmap_size <- function(ht, units = "px", ...) {
@@ -74,19 +92,9 @@ get_heatmap_size <- function(ht, units = "px", ...) {
        height = h)
 }
 
-#' Save a ComplexHeatmap as a standalone png file
-#'
-#' @importFrom ragg agg_png
-#' @importFrom fs dir_create
-#'
-#' @param x a ComplexHeatmap object
-#' @param filename The basename of the output file
-#' @param width,height,units,res The settings for the output file
-#'
 #' @export
-write_heatmap_png <- function(x, filename, ..., width = NA, height = NA, units = "mm", res = 150) {
-  stopifnot(str_detect(filename, "\\.png$"))
-  f <- get_report_path(filename)
+write_plot.Heatmap <- function(x, filename, device = grDevices::png,
+                                      width = NA, height = NA, units = "cm", res = 300, ...) {
 
   if (is.na(width) | is.na(height)) {
     ht_size <- get_heatmap_size(x, units = units, ...)
@@ -94,34 +102,8 @@ write_heatmap_png <- function(x, filename, ..., width = NA, height = NA, units =
     height <- ht_size$height
   }
 
-  agg_png(f, width = width, height = height, units = units, res = res)
+  device(filename, width = width, height = height, units = units, res = res)
   draw(x, ...)
   invisible(dev.off())
-  f
-}
-
-#' Save a ComplexHeatmap as a standalone pdf file
-#'
-#' @importFrom grDevices pdf
-#' @importFrom fs dir_create
-#'
-#' @param x a ComplexHeatmap object
-#' @param filename The basename of the output file
-#' @param width,height The settings for the output file
-#'
-#' @export
-write_heatmap <- function(x, filename, ..., width = NA, height = NA) {
-  stopifnot(str_detect(filename, "\\.pdf$"))
-  f <- get_report_path(filename)
-
-  if (is.na(width) | is.na(height)) {
-    ht_size <- get_heatmap_size(x, units = "inches", ...)
-    width <- ht_size$width
-    height <- ht_size$height
-  }
-
-  pdf(f, width = width, height = height)
-  draw(x, ...)
-  dev.off()
-  f
+  filename
 }

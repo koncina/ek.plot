@@ -2,7 +2,10 @@
 % Please edit documentation in R/write_plot.R
 \name{write_plot}
 \alias{write_plot}
-\title{Save a ggplot as a standalone file using ggsave}
+\title{Save a ggplot or ComplexHeatmap as a standalone file
+and return path to the file.
+I tries to guess the size of the plot if possible
+(downstream of set_panel_size() or after defining a heatmap size)}
 \usage{
 write_plot(
   x,
@@ -15,10 +18,15 @@ write_plot(
 )
 }
 \arguments{
-\item{x}{a ggplot}
+\item{x}{a ggplot or ComplexHeatmap}
 
 \item{filename}{The basename of the output file}
+
+\item{width, height, units, res}{The settings for the output file}
 }
 \description{
-Save a ggplot as a standalone file using ggsave
+Save a ggplot or ComplexHeatmap as a standalone file
+and return path to the file.
+I tries to guess the size of the plot if possible
+(downstream of set_panel_size() or after defining a heatmap size)
 }
