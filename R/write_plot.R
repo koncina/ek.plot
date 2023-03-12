@@ -7,7 +7,6 @@
 #' @param filename The basename of the output file
 #'
 #' @export
-#
 set_panel_size <- function(p = NULL, g = ggplotGrob(p),
                            width = NULL,
                            height = NULL){
@@ -44,9 +43,11 @@ set_panel_size <- function(p = NULL, g = ggplotGrob(p),
 #' @importFrom fs dir_create
 #' @importFrom grid convertWidth convertHeight unitType
 #'
-#' @param x a ggplot or ComplexHeatmap
+#' @param x a ggplot or ComplexHeatmap.
 #' @param filename The basename of the output file
-#' @param width,height,units,res The settings for the output file
+#' @param device Device to use. Defaults to PNG.
+#' @param width,height,units,res The settings for the output file.
+#' @param ... Arguments passed to device or draw.
 #'
 #' @export
 write_plot <- function (x, filename, device = grDevices::png,

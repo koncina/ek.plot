@@ -18,11 +18,15 @@ write_plot(
 )
 }
 \arguments{
-\item{x}{a ggplot or ComplexHeatmap}
+\item{x}{a ggplot or ComplexHeatmap.}
 
 \item{filename}{The basename of the output file}
 
-\item{width, height, units, res}{The settings for the output file}
+\item{device}{Device to use. Defaults to PNG.}
+
+\item{width, height, units, res}{The settings for the output file.}
+
+\item{...}{Arguments passed to device or draw.}
 }
 \description{
 Save a ggplot or ComplexHeatmap as a standalone file
