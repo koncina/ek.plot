@@ -46,7 +46,7 @@ set_panel_size <- function(p = NULL, g = ggplotGrob(p),
 #' @param x a ggplot or ComplexHeatmap.
 #' @param filename The basename of the output file
 #' @param device Device to use. Defaults to PNG.
-#' @param width,height,units,res The settings for the output file.
+#' @param width,height,units The settings for the output file.
 #' @param ... Arguments passed to device or draw.
 #'
 #' @export
@@ -94,8 +94,9 @@ get_heatmap_size <- function(ht, units = "px", ...) {
 }
 
 #' @export
+#' @param res The resolution for the output file.
 write_plot.Heatmap <- function(x, filename, device = grDevices::png,
-                                      width = NA, height = NA, units = "cm", res = 300, ...) {
+                               width = NA, height = NA, units = "cm", res = 300, ...) {
 
   if (is.na(width) | is.na(height)) {
     ht_size <- get_heatmap_size(x, units = units, ...)

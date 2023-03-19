@@ -24,7 +24,7 @@ write_plot(
 
 \item{device}{Device to use. Defaults to PNG.}
 
-\item{width, height, units, res}{The settings for the output file.}
+\item{width, height, units}{The settings for the output file.}
 
 \item{...}{Arguments passed to device or draw.}
 }
