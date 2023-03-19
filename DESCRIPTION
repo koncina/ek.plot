@@ -13,5 +13,9 @@ Imports: broom,
   dplyr,
   fs,
   ggplot2,
-  survival
+  rlang,
+  survival,
+  tibble,
+  tidyr,
+  tidyselect
 RoxygenNote: 7.2.3
