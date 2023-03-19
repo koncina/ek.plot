@@ -9,19 +9,32 @@ draw_bubble <- function(m, m_prop,
 
   function(j, i, x, y, width, height, fill) {
 
-    if (!any(is.na(c(m[i, j], m_prop[i, j])))) {
-      grid.circle(x = x,
-                  y = y,
-                  r = dot_scale * (min(c(width, height)) / 2),
-                  gp = contour_max_gp
-      )
-    }
+    # Not sure this is the best way but it works
+    # width and height are in npc
+    # I had troubles to set the expected size
+    # when splitting columns and or rows...
+
+    r <- (if (convertHeight(height, "mm", valueOnly = TRUE) <
+                   convertWidth(width, "mm", valueOnly = TRUE))
+                 convertHeight(height, "mm") else
+                 convertWidth(width, "mm") ) / 2
+
+
     grid.circle(x = x,
                 y = y,
-                r = m_prop[i, j] * dot_scale * (min(c(width, height)) / 2),
+                r = m_prop[i, j] * dot_scale * r,
                 gp = gpar(col = contour(m[i, j]),
                           fill = fill(m[i, j])
                 ))
+
+    if (!any(is.na(c(m[i, j], m_prop[i, j])))) {
+      grid.circle(x = x,
+                  y = y,
+                  r = dot_scale * r,
+                  gp = contour_max_gp
+      )
+    }
+
   }
 }
 
@@ -59,7 +72,7 @@ bubble_heatmap <- function(data,
                              breaks = c(-2, 0, 2),
                              colors = c("#377EB8", "white", "#E41A1C")
                            ),
-                           contour_max_gp = gpar(col = "gray", lty = 1),
+                           contour_max_gp = gpar(col = "gray", fill = NA, lty = 1),
                            rect_gp = gpar(type = "none"),
                            ...) {
 

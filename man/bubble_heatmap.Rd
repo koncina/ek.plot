@@ -18,7 +18,7 @@ bubble_heatmap(
   fill = TRUE,
   colour_scale = circlize::colorRamp2(breaks = c(-2, 0, 2), colors = c("#377EB8",
     "white", "#E41A1C")),
-  contour_max_gp = gpar(col = "gray", lty = 1),
+  contour_max_gp = gpar(col = "gray", fill = NA, lty = 1),
   rect_gp = gpar(type = "none"),
   ...
 )
