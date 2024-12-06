@@ -210,6 +210,7 @@ build_gsea_montage <- function(p) {
       )
     )
 
+  panels <- grep("panel", g1$layout$name)
   col <- unique(g1$layout$l[panels])
   row <- unique(g1$layout$t[panels])
   stopifnot(length(col) == 1 & col > 1)
