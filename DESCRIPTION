@@ -1,7 +1,7 @@
 Package: ek.plot
 Type: Package
 Title: Plotting helper functions
-Version: 0.2.0.9000
+Version: 0.2.1.9000
 Authors@R: person("Eric", "Koncina", email = "eric.koncina@uni.lu", role = c("aut", "cre"))
 Description: Helper functions used to render plots in my projects.
 License: GPL-3
@@ -11,11 +11,16 @@ Imports: broom,
   circlize,
   ComplexHeatmap,
   dplyr,
+  enrichplot,
   fs,
   ggplot2,
+  gtable,
+  janitor,
+  patchwork,
+  purrr,
   rlang,
   survival,
   tibble,
   tidyr,
   tidyselect
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2

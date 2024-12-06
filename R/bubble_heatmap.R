@@ -15,9 +15,9 @@ draw_bubble <- function(m, m_prop,
     # when splitting columns and or rows...
 
     r <- (if (convertHeight(height, "mm", valueOnly = TRUE) <
-                   convertWidth(width, "mm", valueOnly = TRUE))
-                 convertHeight(height, "mm") else
-                 convertWidth(width, "mm") ) / 2
+              convertWidth(width, "mm", valueOnly = TRUE))
+      convertHeight(height, "mm") else
+        convertWidth(width, "mm") ) / 2
 
 
     grid.circle(x = x,
