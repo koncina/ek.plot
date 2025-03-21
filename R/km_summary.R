@@ -62,6 +62,7 @@ stat_km_summary <- function(mapping = NULL, data = NULL, geom = "km",
                             position = "identity", show.legend = NA, inherit.aes = TRUE,
                             se = TRUE, trans = "identity", firstx = 0, firsty = 1,
                             type = "kaplan-meier", start.time = 0, range = NULL) {
+  .Deprecated("stat_cox")
   ggplot2::layer(
     stat = StatKmSummary,
     data = data,

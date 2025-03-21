@@ -1,7 +1,7 @@
 Package: ek.plot
 Type: Package
 Title: Plotting helper functions
-Version: 0.2.2.9000
+Version: 0.2.3.9000
 Authors@R: person("Eric", "Koncina", email = "eric.koncina@uni.lu", role = c("aut", "cre"))
 Description: Helper functions used to render plots in my projects.
 License: GPL-3
@@ -22,5 +22,6 @@ Imports: broom,
   survival,
   tibble,
   tidyr,
-  tidyselect
+  tidyselect,
+  scales
 RoxygenNote: 7.3.2
